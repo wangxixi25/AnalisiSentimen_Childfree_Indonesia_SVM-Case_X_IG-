@@ -1,0 +1,13 @@
+streamlit
+openpyxl
+pandas
+plotly
+altair
+wordcloud
+scikit-learn
+nltk
+sastrawi
+joblib
+streamlit-option-menu
+matplotlib
+imbalanced-learn
