@@ -10,17 +10,11 @@ import os
 # Pastikan stopwords sudah didownload
 nltk.download('stopwords')
 
-# ========== Load Kamus Normalisasi ==========
-# Tentukan base directory dan path file Excel
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-kamus_path = os.path.join(BASE_DIR, "data", "kamuskatabaku.xlsx")
-stopwords_path = os.path.join(BASE_DIR, "data", "stopwords_tambahan.xlsx")
+# Load kamus normalisasi
+kamus_df = pd.read_excel("data/kamuskatabaku.xlsx").dropna(subset=['tidak_baku', 'kata_baku'])
+kamus_df['tidak_baku'] = kamus_df['tidak_baku'].astype(str).str.lower()
+kamus_df['kata_baku'] = kamus_df['kata_baku'].astype(str).str.lower()
 
-# Load data dari Excel menggunakan path absolut relatif
-kamus_df = pd.read_excel(kamus_path).dropna(subset=['tidak_baku', 'kata_baku'])
-excel_stopwords = pd.read_excel(stopwords_path).iloc[:, 0].dropna().astype(str).tolist()
-
-# Buat dictionary normalisasi
 kamus_normalisasi = dict(zip(kamus_df['tidak_baku'], kamus_df['kata_baku']))
 
 # Load stopwords NLTK, Sastrawi, Excel, dan custom
@@ -87,8 +81,8 @@ def preprocess(text):
 
 
 # ========== Load Model & Vectorizer ==========
-vectorizer = joblib.load('models/tfidf_vectorizer.pkl')
-model = joblib.load('models/svm_best_model.pkl')
+vectorizer = joblib.load('../models/tfidf_vectorizer.pkl')
+model = joblib.load('../models/svm_best_model.pkl')
 
 # ========== Streamlit App ==========
 def run():
