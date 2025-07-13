@@ -42,6 +42,29 @@ def generate_bar_chart(word_freq):
     st.altair_chart(chart, use_container_width=True)
 
 # Fungsi utama untuk menampilkan wordcloud
+    st.markdown("""
+    <style>
+    @media only screen and (max-width: 768px) {
+        .element-container .stMarkdown h5 {
+            font-size: 14px !important;
+            text-align: center;
+        }
+        .stImage img {
+            width: 100% !important;
+            height: auto !important;
+        }
+        .stAltairChart {
+            width: 100% !important;
+            overflow-x: scroll !important;
+        }
+        .block-container {
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+        }
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
 def tampilkan_wordcloud(df):
     # === Layout Wordcloud 4 Kolom ===
     col1, col2, col3, col4 = st.columns([1, 1, 1, 2])

@@ -263,3 +263,58 @@ def run():
                 """,
                 unsafe_allow_html=True,
             )
+
+    st.markdown("""
+    <style>
+    @media screen and (max-width: 768px) {
+        .header-container {
+            padding: 20px !important;
+            gap: 20px !important;
+        }
+
+        .header-top {
+            flex-direction: column !important;
+            gap: 20px !important;
+        }
+
+        .header-text h1 {
+            font-size: 24px !important;
+        }
+
+        .header-subtitle {
+            font-size: 14px !important;
+        }
+
+        .card-container {
+            flex-direction: column !important;
+            align-items: center !important;
+        }
+
+        .card {
+            width: 100% !important;
+            max-width: 90% !important;
+        }
+
+        .header-image {
+            max-width: 100% !important;
+        }
+
+        .header-image img {
+            max-width: 100% !important;
+            height: auto !important;
+        }
+
+        .justify-text {
+            font-size: 14px !important;
+        }
+
+        .custom-hr {
+            width: 100% !important;
+        }
+
+        .block-container {
+            padding: 1rem 0.5rem !important;
+        }
+    }
+    </style>
+    """, unsafe_allow_html=True)

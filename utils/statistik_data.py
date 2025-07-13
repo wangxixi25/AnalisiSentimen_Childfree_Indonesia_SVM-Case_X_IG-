@@ -376,3 +376,51 @@ def tampilkan_statistik_dashboard(df):
 
                 st.plotly_chart(fig_pie, use_container_width=True)
 
+    st.markdown("""
+        <style>
+        /* MEDIA QUERY: Tampilan khusus untuk layar kecil (HP) */
+        @media only screen and (max-width: 768px) {
+            
+            /* Atur layout card agar ditumpuk ke bawah */
+            .card-container {
+                flex-direction: column !important;
+                align-items: center !important;
+            }
+
+            .card, .card-outline, .summary-card {
+                width: 100% !important;
+                margin-bottom: 10px !important;
+                padding: 12px !important;
+                font-size: 14px !important;
+            }
+
+            .summary-row > div {
+                width: 100% !important;
+                margin-bottom: 6px !important;
+            }
+
+            .custom-title {
+                font-size: 22px !important;
+                padding: 20px 10px !important;
+            }
+
+            .center-header {
+                font-size: 20px !important;
+            }
+
+            .scrollable-table {
+                max-height: 300px !important;
+                font-size: 12px !important;
+            }
+
+            .stSelectbox > div {
+                font-size: 14px !important;
+            }
+
+            .stPlotlyChart {
+                height: auto !important;
+            }
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
