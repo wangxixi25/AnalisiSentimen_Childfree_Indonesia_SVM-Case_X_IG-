@@ -11,7 +11,7 @@ import os
 nltk.download('stopwords')
 
 # Load kamus normalisasi
-kamus_df = pd.read_excel("data/kamuskatabaku.xlsx").dropna(subset=['tidak_baku', 'kata_baku'])
+kamus_df = pd.read_excel("../data/kamuskatabaku.xlsx").dropna(subset=['tidak_baku', 'kata_baku'])
 kamus_df['tidak_baku'] = kamus_df['tidak_baku'].astype(str).str.lower()
 kamus_df['kata_baku'] = kamus_df['kata_baku'].astype(str).str.lower()
 
