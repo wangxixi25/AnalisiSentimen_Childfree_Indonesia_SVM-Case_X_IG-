@@ -39,7 +39,7 @@ def run():
         st.markdown(TITLE_STYLE, unsafe_allow_html=True)
 
         # Load data dari 'Hasil_data_pre.xlsx'
-        df = load_data("data/Hasil_data_pre.xlsx")
+        df = load_data("data/Hasil_Data_Pre.xlsx")
         if df.empty:
             st.stop() 
         

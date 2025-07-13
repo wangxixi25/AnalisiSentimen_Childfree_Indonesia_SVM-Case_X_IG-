@@ -13,7 +13,7 @@ def run():
             return base64.b64encode(img_file.read()).decode()
 
     # ===== Load Data =====
-    df = pd.read_excel("data/Hasil_data_pre.xlsx")
+    df = pd.read_excel("data/Hasil_Data_Pre.xlsx")
 
     # ===== Header Image =====
     img_base64 = get_base64_image("asset/Gambar2.png")
