@@ -29,7 +29,7 @@ nltk_stopwords = stopwords.words('indonesian')
 from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
 sastrawi_stopwords = StopWordRemoverFactory().get_stop_words()
 
-excel_stopwords = pd.read_excel("data/stopwords_tambahan.xlsx").iloc[:, 0].dropna().astype(str).tolist()
+excel_stopwords = pd.read_excel("../data/stopwords_tambahan.xlsx").iloc[:, 0].dropna().astype(str).tolist()
 
 custom_stopwords = [
     'banget', 'aja', 'kok', 'nih', 'ya', 'deh', 'lah', 'dong', 'mah',
