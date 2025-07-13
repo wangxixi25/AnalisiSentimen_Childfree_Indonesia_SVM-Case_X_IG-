@@ -38,8 +38,8 @@ def run():
         st.markdown(PADDING_STYLE, unsafe_allow_html=True)
         st.markdown(TITLE_STYLE, unsafe_allow_html=True)
 
-        # Load data dari 'Hasil Data Pre.xlsx'
-        df = load_data("data/Hasil Data Pre.xlsx")
+        # Load data dari 'Hasil_data_pre.xlsx'
+        df = load_data("data/Hasil_data_pre.xlsx")
         if df.empty:
             st.stop() 
         
