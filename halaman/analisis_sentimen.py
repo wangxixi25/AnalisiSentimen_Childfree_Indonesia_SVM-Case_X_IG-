@@ -10,7 +10,7 @@ import streamlit as st
 nltk.download('stopwords')
 
 # Load kamus normalisasi
-kamus_df = pd.read_excel("../data/kamuskatabaku.xlsx").dropna(subset=['tidak_baku', 'kata_baku'])
+kamus_df = pd.read_excel("data/kamuskatabaku.xlsx").dropna(subset=['tidak_baku', 'kata_baku'])
 kamus_df['tidak_baku'] = kamus_df['tidak_baku'].astype(str).str.lower()
 kamus_df['kata_baku'] = kamus_df['kata_baku'].astype(str).str.lower()
 
@@ -22,7 +22,7 @@ nltk_stopwords = stopwords.words('indonesian')
 from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
 sastrawi_stopwords = StopWordRemoverFactory().get_stop_words()
 
-excel_stopwords = pd.read_excel("../data/stopwords_tambahan.xlsx").iloc[:, 0].dropna().astype(str).tolist()
+excel_stopwords = pd.read_excel("data/stopwords_tambahan.xlsx").iloc[:, 0].dropna().astype(str).tolist()
 
 custom_stopwords = [
     'banget', 'aja', 'kok', 'nih', 'ya', 'deh', 'lah', 'dong', 'mah',
@@ -80,8 +80,8 @@ def preprocess(text):
 
 
 # ========== Load Model & Vectorizer ==========
-vectorizer = joblib.load('../models/tfidf_vectorizer.pkl')
-model = joblib.load('../models/svm_best_model.pkl')
+vectorizer = joblib.load('models/tfidf_vectorizer.pkl')
+model = joblib.load('models/svm_best_model.pkl')
 
 # ========== Streamlit App ==========
 def run():
