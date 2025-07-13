@@ -5,7 +5,6 @@ from nltk.corpus import stopwords
 import nltk
 import joblib
 import streamlit as st
-import os
 
 # Pastikan stopwords sudah didownload
 nltk.download('stopwords')
