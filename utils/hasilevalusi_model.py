@@ -46,7 +46,7 @@ def tampilkan_grafik_perbandingan_full(file_path):
                 fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
                 fig.update_layout(
-                    height=200,
+                    height=350,
                     margin=dict(t=40, l=30, r=20, b=20),
                     title=skenario,
                     title_font=dict(size=16),
@@ -57,7 +57,7 @@ def tampilkan_grafik_perbandingan_full(file_path):
 
                 fig.update_traces(
                     textposition='inside',
-                    textfont_size=14
+                    textfont_size=16
                 )
 
                 fig.for_each_xaxis(lambda x: x.update(
