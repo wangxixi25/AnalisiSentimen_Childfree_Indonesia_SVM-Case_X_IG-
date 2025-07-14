@@ -2,13 +2,8 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 from halaman import home, dashboard, analisis_sentimen
 
+# Harus jadi perintah pertama sebelum ada perintah Streamlit lain
 st.set_page_config(page_title="Childfree Insight", page_icon=":bar_chart:", layout="wide")
-
-from streamlit_option_menu import option_menu
-import streamlit as st
-
-from streamlit_option_menu import option_menu
-import streamlit as st
 
 with st.sidebar:
     selected = option_menu(
