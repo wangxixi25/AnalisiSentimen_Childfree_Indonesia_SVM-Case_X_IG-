@@ -66,6 +66,32 @@ def tampilkan_kartu_sentimen(jumlah_pro, jumlah_kontra):
             width: 300px;
             background-color: #FFB22C;
         }}
+
+        /* RESPONSIVE UNTUK MOBILE (HP) */
+        @media only screen and (max-width: 768px) {{
+            .card, .card-total {{
+                width: 95% !important;
+                padding: 10px !important;
+                font-size: 14px !important;
+            }}
+
+            .card i {{
+                font-size: 38px !important;
+            }}
+
+            .card h2 {{
+                font-size: 22px !important;
+            }}
+
+            .card h4 {{
+                font-size: 16px !important;
+            }}
+
+            .card-container {{
+                flex-direction: column !important;
+                align-items: center !important;
+            }}
+        }}
     </style>
     <div class="card-container">
         <div class="card card-pro">
