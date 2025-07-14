@@ -2,77 +2,99 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-import streamlit as st
-import pandas as pd
-import plotly.express as px
+st.markdown("""
+<style>
+/* Untuk container responsif 2 kolom di desktop, 1 kolom di HP */
+.grafik-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.grafik-box {
+    flex: 1 1 48%;
+    min-width: 320px;
+}
+@media screen and (max-width: 768px) {
+    .grafik-box {
+        flex: 1 1 100%;
+    }
+}
+</style>
+""", unsafe_allow_html=True)
 
 def tampilkan_grafik_perbandingan_full(file_path):
     df = pd.read_excel(file_path)
 
+    # Bersihkan data
     df_clean = df.iloc[1:, [0, 1, 2, 9, 10, 11, 12]]
-    df_clean.columns = ['Teknik Imbalance', 'Kernel SVM', 'Skenario Data Split',
-                        'Accuracy', 'Precision', 'Recall', 'F1-score']
-
+    df_clean.columns = ['Teknik Imbalance', 'Kernel SVM', 'Skenario Data Split', 'Accuracy', 'Precision', 'Recall', 'F1-score']
     skenarios = ['90:10', '80:20', '70:30', '60:40']
 
-    # Looping dalam 2 baris × 2 kolom
-    for i in range(0, len(skenarios), 2):
-        cols = st.columns(2)
-        for j in range(2):
-            if i + j < len(skenarios):
-                skenario = skenarios[i + j]
-                with cols[j]:
-                    st.subheader(f'Skenario: {skenario}')
-                    df_filtered = df_clean[df_clean['Skenario Data Split'] == skenario]
-                    df_melted = df_filtered.melt(
-                        id_vars=['Teknik Imbalance', 'Kernel SVM'],
-                        value_vars=['Accuracy', 'Precision', 'Recall', 'F1-score'],
-                        var_name='Metric', value_name='Score'
-                    )
-                    df_melted['Score'] = df_melted['Score'] * 100
-                    df_melted['Score_Text'] = df_melted['Score'].apply(lambda x: f"{x:.2f}%")
+    st.markdown('<div class="grafik-container">', unsafe_allow_html=True)
 
-                    fig = px.bar(
-                        df_melted,
-                        x='Metric',
-                        y='Score',
-                        color='Kernel SVM',
-                        text='Score_Text',
-                        barmode='group',
-                        facet_col='Teknik Imbalance',
-                        color_discrete_map={
-                            'Linier': '#09B4A2',
-                            'RBF': '#3F63CF',
-                            'Polynomial': '#EA4590'
-                        }
-                    )
+    for skenario in skenarios:
+        st.markdown('<div class="grafik-box">', unsafe_allow_html=True)
 
-                    fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
+        st.subheader(f"Skenario: {skenario}")
+        df_filtered = df_clean[df_clean['Skenario Data Split'] == skenario]
+        df_melted = df_filtered.melt(
+            id_vars=['Teknik Imbalance', 'Kernel SVM'],
+            value_vars=['Accuracy', 'Precision', 'Recall', 'F1-score'],
+            var_name='Metric', value_name='Score'
+        )
+        df_melted['Score'] = df_melted['Score'].astype(float) * 100
+        df_melted['Score_Text'] = df_melted['Score'].apply(lambda x: f"{x:.2f}%")
 
-                    fig.update_layout(
-                        height=300,  # Ukuran tinggi grafik
-                        margin=dict(t=40, l=30, r=20, b=20),
-                        title=skenario,
-                        title_font=dict(size=16),
-                        title_x=0.5,
-                        legend_title='Kernel SVM',
-                        legend_font=dict(size=13),
-                        bargap=0.25,
-                        bargroupgap=0.1,
-                    )
+        fig = px.bar(
+            df_melted,
+            x='Metric',
+            y='Score',
+            color='Kernel SVM',
+            text='Score_Text',
+            barmode='group',
+            facet_col='Teknik Imbalance',
+            color_discrete_map={
+                'Linier': '#09B4A2',
+                'RBF': '#3F63CF',
+                'Polynomial': '#EA4590'
+            }
+        )
 
-                    fig.update_traces(
-                        textposition='inside',
-                        textfont_size=18,
-                    )
+        # Update label facet agar lebih ringkas
+        fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
-                    fig.for_each_yaxis(lambda y: y.update(tick0=0, dtick=30,range=[0, 82], title_font=dict(size=14)))
-                    fig.for_each_xaxis(lambda x: x.update(tickangle=0, title='Metric',
-                                                          title_font=dict(size=12),
-                                                          tickfont=dict(size=11)))
+        # Layout & responsivitas
+        fig.update_layout(
+            height=400,
+            margin=dict(t=40, l=30, r=20, b=20),
+            title=skenario,
+            title_font=dict(size=16),
+            title_x=0.5,
+            legend_title='Kernel SVM',
+            legend_font=dict(size=13),
+            bargap=0.25,
+            bargroupgap=0.1,
+            uniformtext_minsize=10,
+            uniformtext_mode='hide'
+        )
 
-                    st.plotly_chart(fig, use_container_width=True)
+        # Posisi & ukuran teks skor
+        fig.update_traces(
+            textposition='inside',
+            textfont_size=16,
+            cliponaxis=False
+        )
 
+        # Per facet sumbu X dan Y
+        fig.for_each_yaxis(lambda y: y.update(tick0=0, dtick=20, range=[0, 82], title_font=dict(size=13)))
+        fig.for_each_xaxis(lambda x: x.update(tickangle=0, title='Metric', title_font=dict(size=12), tickfont=dict(size=10)))
+
+        st.plotly_chart(fig, use_container_width=True)
+
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Fungsi untuk menampilkan Akurasi Terbaik
 def tampilkan_akurasi_terbaik(file_path):
