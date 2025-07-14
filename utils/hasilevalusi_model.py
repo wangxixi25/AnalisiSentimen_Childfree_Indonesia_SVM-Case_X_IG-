@@ -1,19 +1,16 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
 
-# Fungsi untuk menampilkan grafik perbandingan penuh
 def tampilkan_grafik_perbandingan_full(file_path):
     df = pd.read_excel(file_path)
 
-    # Mengatur kolom dan data untuk perbandingan teknik imbalance
+    # Ambil dan bersihkan data
     df_clean = df.iloc[1:, [0, 1, 2, 9, 10, 11, 12]]
-    df_clean.columns = ['Teknik Imbalance', 'Kernel SVM', 'Skenario Data Spilt', 'Accuracy', 'Precision', 'Recall', 'F1-score']
+    df_clean.columns = ['Teknik Imbalance', 'Kernel SVM', 'Skenario Data Split', 'Accuracy', 'Precision', 'Recall', 'F1-score']
 
     skenarios = ['90:10', '80:20', '70:30', '60:40']
 
-    # Membuat grafik perbandingan untuk setiap skenario
     for i in range(0, len(skenarios), 2):
         col1, col2 = st.columns(2)
 
@@ -22,42 +19,52 @@ def tampilkan_grafik_perbandingan_full(file_path):
                 skenario = skenarios[idx]
                 with col:
                     st.subheader(f'Skenario: {skenario}')
-                    df_filtered = df_clean[df_clean['Skenario Data Spilt'] == skenario]
+                    df_filtered = df_clean[df_clean['Skenario Data Split'] == skenario]
                     df_melted = df_filtered.melt(
                         id_vars=['Teknik Imbalance', 'Kernel SVM'],
                         value_vars=['Accuracy', 'Precision', 'Recall', 'F1-score'],
                         var_name='Metric', value_name='Score'
                     )
-                    df_melted['Score'] = df_melted['Score'] * 100  # Mengonversi ke persen
-                    df_melted['Score_Text'] = df_melted['Score'].apply(lambda x: f"{x:.2f}%")  # Format sebagai persentase
+                    df_melted['Score'] = df_melted['Score'] * 100
+                    df_melted['Score_Text'] = df_melted['Score'].apply(lambda x: f"{x:.2f}%")
 
                     fig = px.bar(
                         df_melted,
                         x='Metric',
                         y='Score',
                         color='Kernel SVM',
-                        barmode='group',
                         text='Score_Text',
+                        barmode='group',
                         facet_col='Teknik Imbalance',
-                        color_discrete_sequence=["#09B4A2", "#3F63CF", "#EA4590"]
+                        color_discrete_map={
+                            'Linier': '#09B4A2',
+                            'RBF': '#3F63CF',
+                            'Polynomial': '#EA4590'
+                        }
                     )
 
-                    # Hapus label 'Teknik Imbalance=' → agar hanya tampil SMOTE, SMOTE Tomek, ADASYN, dst.
-                    fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1].strip()))
+                    # Bersihkan label facet
+                    fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
-                    fig.update_traces(textfont=dict(size=16))
+                    # Layout dan sumbu
                     fig.update_layout(
-                        height=550,
-                        title=f'{skenario}',
-                        title_font=dict(size=20),
-                        xaxis_title='Metric',
-                        yaxis_title='Nilai (%)',
-                        xaxis_title_font=dict(size=16),
-                        yaxis_title_font=dict(size=16),
+                        height=400,
+                        margin=dict(t=40, l=30, r=20, b=20),
+                        title=skenario,
+                        title_font=dict(size=16),
+                        title_x=0.5,
                         legend_title='Kernel SVM',
-                        legend_font=dict(size=14),
-                        margin=dict(t=50, l=20, r=20, b=20)
+                        legend_font=dict(size=13),
                     )
+
+                    fig.update_traces(
+                        textposition='inside',
+                        textfont_size=20,
+                    )
+
+                    # Sumbu X dan Y per facet
+                    fig.for_each_yaxis(lambda y: y.update(tick0=0, dtick=20, range=[0,82], title_font=dict(size=14)))
+                    fig.for_each_xaxis(lambda x: x.update(tickangle=0, title='Metric', title_font=dict(size=12), tickfont=dict(size=10)))
 
                     st.plotly_chart(fig, use_container_width=True)
 
@@ -106,120 +113,3 @@ def tampilkan_akurasi_terbaik(file_path):
     )
 
     st.plotly_chart(fig_best, use_container_width=True)
-
-# Fungsi untuk menampilkan Evaluasi K-Fold menggunakan Line Chart
-def tampilkan_evaluasi_kfold(file_path):
-    df = pd.read_excel(file_path)
-    
-    # Memeriksa kolom yang ada dalam data K-Fold
-    required_columns = ['Fold', 'Accuracy Fold', 'Precision Fold', 'Recall Fold', 'F1-score Fold']
-    missing_columns = [col for col in required_columns if col not in df.columns]
-
-    if missing_columns:
-        st.error(f"Kolom berikut tidak ditemukan dalam data K-Fold: {', '.join(missing_columns)}")
-        return
-
-    df_folds = df[['Fold', 'Accuracy Fold', 'Precision Fold', 'Recall Fold', 'F1-score Fold']]
-
-    # Menghitung rata-rata untuk setiap metrik K-Fold
-    avg_accuracy = df_folds['Accuracy Fold'].mean() * 100  # Mengonversi ke persen
-    avg_precision = df_folds['Precision Fold'].mean() * 100
-    avg_recall = df_folds['Recall Fold'].mean() * 100
-    avg_f1 = df_folds['F1-score Fold'].mean() * 100
-
-    # Membuat grafik line chart untuk setiap metrik K-Fold
-    fig_combined = go.Figure()
-
-    # Menambahkan line chart untuk setiap metrik
-    fig_combined.add_trace(go.Scatter(
-        x=df_folds['Fold'],
-        y=df_folds['Accuracy Fold'] * 100,  # Mengonversi ke persen
-        mode='lines+markers',
-        name='Accuracy',
-        marker_color='rgb(0, 123, 255)',
-        text=df_folds['Accuracy Fold'].apply(lambda x: f"{x * 100:.2f}%"),  # Format sebagai persentase
-        textposition='top center'
-    ))
-
-    fig_combined.add_trace(go.Scatter(
-        x=df_folds['Fold'],
-        y=df_folds['Precision Fold'] * 100,  # Mengonversi ke persen
-        mode='lines+markers',
-        name='Precision',
-        marker_color='rgb(40, 167, 69)',
-        text=df_folds['Precision Fold'].apply(lambda x: f"{x * 100:.2f}%"),  # Format sebagai persentase
-        textposition='top center'
-    ))
-
-    fig_combined.add_trace(go.Scatter(
-        x=df_folds['Fold'],
-        y=df_folds['Recall Fold'] * 100,  # Mengonversi ke persen
-        mode='lines+markers',
-        name='Recall',
-        marker_color='rgb(255, 193, 7)',
-        text=df_folds['Recall Fold'].apply(lambda x: f"{x * 100:.2f}%"),  # Format sebagai persentase
-        textposition='top center'
-    ))
-
-    fig_combined.add_trace(go.Scatter(
-        x=df_folds['Fold'],
-        y=df_folds['F1-score Fold'] * 100,  # Mengonversi ke persen
-        mode='lines+markers',
-        name='F1-score',
-        marker_color='rgb(255, 69, 0)',
-        text=df_folds['F1-score Fold'].apply(lambda x: f"{x * 100:.2f}%"),  # Format sebagai persentase
-        textposition='top center'
-    ))
-
-    # Menambahkan garis rata-rata untuk setiap metrik
-    fig_combined.add_trace(go.Scatter(
-        x=df_folds['Fold'],
-        y=[avg_accuracy] * len(df_folds),
-        mode='lines',
-        name='Average Accuracy',
-        line=dict(color='rgb(0, 123, 255)', dash='dash'),
-        text=[f"Avg: {avg_accuracy:.2f}%" for _ in df_folds['Fold']],
-        textposition='bottom center'
-    ))
-
-    fig_combined.add_trace(go.Scatter(
-        x=df_folds['Fold'],
-        y=[avg_precision] * len(df_folds),
-        mode='lines',
-        name='Average Precision',
-        line=dict(color='rgb(40, 167, 69)', dash='dash'),
-        text=[f"Avg: {avg_precision:.2f}%" for _ in df_folds['Fold']],
-        textposition='bottom center'
-    ))
-
-    fig_combined.add_trace(go.Scatter(
-        x=df_folds['Fold'],
-        y=[avg_recall] * len(df_folds),
-        mode='lines',
-        name='Average Recall',
-        line=dict(color='rgb(255, 193, 7)', dash='dash'),
-        text=[f"Avg: {avg_recall:.2f}%" for _ in df_folds['Fold']],
-        textposition='bottom center'
-    ))
-
-    fig_combined.add_trace(go.Scatter(
-        x=df_folds['Fold'],
-        y=[avg_f1] * len(df_folds),
-        mode='lines',
-        name='Average F1-score',
-        line=dict(color='rgb(255, 69, 0)', dash='dash'),
-        text=[f"Avg: {avg_f1:.2f}%" for _ in df_folds['Fold']],
-        textposition='bottom center'
-    ))
-
-    # Update layout
-    fig_combined.update_layout(
-        title="K-Fold Cross Validation Performance",
-        xaxis_title='Fold',
-        yaxis_title='Nilai (%)',
-        height=500,
-        margin=dict(t=50, l=40, r=40, b=40),
-        showlegend=True
-    )
-
-    st.plotly_chart(fig_combined, use_container_width=True)

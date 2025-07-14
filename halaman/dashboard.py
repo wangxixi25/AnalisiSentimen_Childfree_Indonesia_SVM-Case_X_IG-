@@ -4,7 +4,7 @@ from streamlit_option_menu import option_menu
 from utils.statistik_data import load_data, tampilkan_kartu_sentimen, tampilkan_kartu_platform, tampilkan_statistik_dashboard
 from utils.wordcloud_utils import tampilkan_wordcloud
 from utils.pesebarandata_spilt import display_graphs
-from utils.hasilevalusi_model import tampilkan_grafik_perbandingan_full, tampilkan_akurasi_terbaik, tampilkan_evaluasi_kfold
+from utils.hasilevalusi_model import tampilkan_grafik_perbandingan_full, tampilkan_akurasi_terbaik
 
 
 def run():
