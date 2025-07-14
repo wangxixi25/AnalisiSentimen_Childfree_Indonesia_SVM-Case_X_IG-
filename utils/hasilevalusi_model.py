@@ -66,7 +66,7 @@ def tampilkan_grafik_perbandingan_full(file_path):
                         textfont_size=18,
                     )
 
-                    fig.for_each_yaxis(lambda y: y.update(tick0=0, dtick=20, range=[0, 82], title_font=dict(size=14)))
+                    fig.for_each_yaxis(lambda y: y.update(tick0=0, dtick=30,range=[0, 82], title_font=dict(size=14)))
                     fig.for_each_xaxis(lambda x: x.update(tickangle=0, title='Metric',
                                                           title_font=dict(size=12),
                                                           tickfont=dict(size=11)))
