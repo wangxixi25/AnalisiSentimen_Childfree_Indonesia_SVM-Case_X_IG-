@@ -326,7 +326,11 @@ def tampilkan_statistik_dashboard(df):
                     df_summary = df_summary.groupby(["Label-Bulan", "Label"]).sum().reset_index()
 
                     chart = alt.Chart(df_summary).mark_bar().encode(
-                        x=alt.X("Label-Bulan:N", title="Bulan", sort=list(bulan_mapping.values()), axis=alt.Axis(labelAngle=0, labelFontSize=10)),
+                        x=alt.X("Label-Bulan:N",
+                            title="Bulan",
+                            sort=bulan_urut,
+                            axis=alt.Axis(labelAngle=0, labelFontSize=10),
+                            scale=alt.Scale(domain=bulan_urut)),  # Ini yang memaksa semua bulan tampil
                         y=alt.Y("Jumlah:Q", title="Jumlah"),
                         color=alt.Color("Label:N", scale=alt.Scale(domain=["Pro", "Kontra"], range=["#A1C398", "#FF6868"])),
                         tooltip=["Label-Bulan", "Label", "Jumlah"]
