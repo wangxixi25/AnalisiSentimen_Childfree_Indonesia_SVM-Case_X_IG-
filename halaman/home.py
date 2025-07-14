@@ -53,8 +53,7 @@ def run():
     # ===== Judul & Deskripsi =====
     st.markdown("""
     <div style="margin-bottom: 1rem;">
-    <h3 style="font-size: 28px; margin-bottom: 0.3rem;">Munculnya Isu Childfree di Media Sosial</h3>
-    <hr style="border: 3px solid #313552; width: 50%; margin-top: 5px; margin-bottom: 20px; margin-left: 0;">
+    <h3 style="font-size: 28px; margin-bottom: 20 px;">Munculnya Isu Childfree di Media Sosial</h3>
     <p style="text-align: justify; font-size: 16px; line-height: 1.6; color: #333333;">
         Childfree adalah keputusan individu atau pasangan untuk tidak memiliki anak.
         Fenomena ini semakin populer karena pengaruh globalisasi, budaya Barat, serta gerakan feminisme
