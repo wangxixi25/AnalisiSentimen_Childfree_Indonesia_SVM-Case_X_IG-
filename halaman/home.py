@@ -15,71 +15,42 @@ def run():
     # ===== Load Data =====
     df = pd.read_excel("data/Hasil_Data_Pre.xlsx")
 
-    # ===== Header Image =====
+    # ===== Load & Encode Gambar Header =====
     img_base64 = get_base64_image("asset/Gambar2.png")
 
-    # ===== CSS Header =====
-    st.markdown(
-    f"""
-    <style>
-        .header-container {{
-            background-color: #4285F4;
-            padding: 60px 50px;
+    # ===== Header (Versi Native + Inline Style) =====
+    st.markdown(f"""
+    <div style="
+        background-color: #4285F4;
+        padding: 2rem;
+        border-radius: 12px;
+        color: white;
+        margin-bottom: 2rem;
+    ">
+        <div style="
             display: flex;
-            flex-direction: column;
-            gap: 40px;
-            margin-bottom: 40px;
-            color: white;
-        }}
-        .header-top {{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 60px;
             flex-wrap: wrap;
-        }}
-        .header-text {{
-            flex: 2;
-        }}
-        .header-text h1 {{
-            font-size: 48px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            color: #FFFFFF;
-        }}
-        .header-subtitle {{
-            font-size: 16px;
-            line-height: 1.5;
-            margin-top: 8px;
-            color: #E5E7EB; /* putih keabu-abuan */
-        }}
-        .header-image {{
-            flex: 2;
-            max-width: 500px;
-        }}
-        .header-image img {{
-            width: 100%;
-            max-height: 500px;
-            height: auto;
-        }}
-    </style>
-
-    <div class="header-container">
-        <div class="header-top">
-            <div class="header-text">
-                <h1>Fenomena Childfree di Platform Media Sosial X dan Instagram</h1>
-                <p class="header-subtitle">
-                    Pilihan untuk hidup tanpa anak atau childfree menjadi sorotan di media sosial, yang mencerminkan pergeseran nilai dan prioritas hidup generasi muda. Visualisasi ini menyajikan analisis opini publik dari platform X dan Instagram selama tahun 2021–2024 menggunakan metode klasifikasi Support Vector Machine.
+            align-items: center;
+            gap: 2rem;
+        ">
+            <div style="flex: 1 1 300px;">
+                <h2 style="margin-top: 0; font-size: clamp(24px, 5vw, 40px); line-height: 1.3;">
+                    Fenomena Childfree di Platform Media Sosial X dan Instagram
+                </h2>
+                <p style="font-size: clamp(14px, 2.5vw, 17px); line-height: 1.6;">
+                    Pilihan untuk hidup tanpa anak atau <em>childfree</em> menjadi sorotan di media sosial, 
+                    yang mencerminkan pergeseran nilai dan prioritas hidup generasi muda. Visualisasi ini menyajikan 
+                    analisis opini publik dari platform X dan Instagram selama tahun 2021–2024 menggunakan metode 
+                    klasifikasi <strong>Support Vector Machine</strong>.
                 </p>
             </div>
-            <div class="header-image">
-                <img src="data:image/png;base64,{img_base64}" />
+            <div style="flex: 1 1 300px;">
+                <img src="data:image/png;base64,{img_base64}" style="max-width: 100%; height: auto; border-radius: 8px;" />
             </div>
         </div>
     </div>
-    """,
-    unsafe_allow_html=True,
-)
+    """, unsafe_allow_html=True)
+
 
     # ===== CSS Deskripsi =====
     st.markdown(
@@ -263,58 +234,3 @@ def run():
                 """,
                 unsafe_allow_html=True,
             )
-
-    st.markdown("""
-    <style>
-    @media screen and (max-width: 768px) {
-        .header-container {
-            padding: 20px !important;
-            gap: 20px !important;
-        }
-
-        .header-top {
-            flex-direction: column !important;
-            gap: 20px !important;
-        }
-
-        .header-text h1 {
-            font-size: 24px !important;
-        }
-
-        .header-subtitle {
-            font-size: 14px !important;
-        }
-
-        .card-container {
-            flex-direction: column !important;
-            align-items: center !important;
-        }
-
-        .card {
-            width: 100% !important;
-            max-width: 90% !important;
-        }
-
-        .header-image {
-            max-width: 100% !important;
-        }
-
-        .header-image img {
-            max-width: 100% !important;
-            height: auto !important;
-        }
-
-        .justify-text {
-            font-size: 14px !important;
-        }
-
-        .custom-hr {
-            width: 100% !important;
-        }
-
-        .block-container {
-            padding: 1rem 0.5rem !important;
-        }
-    }
-    </style>
-    """, unsafe_allow_html=True)
