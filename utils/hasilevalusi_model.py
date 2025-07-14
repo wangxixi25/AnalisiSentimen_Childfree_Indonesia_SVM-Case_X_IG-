@@ -44,17 +44,15 @@ def tampilkan_grafik_perbandingan_full(file_path):
                 )
 
                 fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
-
                 fig.update_layout(
                     height=350,
-                    margin=dict(t=50,l=30, r=20, b=20),
-                    title=skenario,
-                    title_font=dict(size=16),
-                    title_x=0.5,
+                    margin=dict(t=50, l=30, r=20, b=60),  # ubah b=20 → b=60 agar ada spasi bawah
+                    title=f'Skenario Data Split {skenario}',
+                    title_font=dict(size=20),
+                    title_x=0.0,  # 0.0 = kiri, 0.5 = tengah, 1.0 = kanan
                     legend_title='Kernel SVM',
                     legend_font=dict(size=13),
                 )
-
                 fig.update_traces(
                     textposition='inside',
                     textfont_size=14
@@ -73,11 +71,8 @@ def tampilkan_grafik_perbandingan_full(file_path):
                 ))
 
                 with cols[j]:
-                    st.markdown(
-                        f"<div style='text-align: left; font-weight: 600; font-size: 16px; margin-bottom: -8px;'>Skenario Data Split {skenario}</div>",
-                        unsafe_allow_html=True
-                    )
                     st.plotly_chart(fig, use_container_width=True)
+
 
 # Fungsi untuk menampilkan Akurasi Terbaik
 def tampilkan_akurasi_terbaik(file_path):
