@@ -50,120 +50,64 @@ def run():
     </div>
     """, unsafe_allow_html=True)
 
-
-
-    # ===== CSS Deskripsi =====
-    st.markdown(
-        """
-        <style>
-            .header {
-                font-size: 30px; 
-                margin-bottom: 5px;
-            }
-            .custom-hr {
-                border: 3px solid #313552;
-                width: 500px;
-                margin-top: 5px;
-                margin-bottom: 20px;
-                margin-left: 0;
-            }
-            .justify-text {
-                text-align: justify;
-                text-justify: inter-word;
-                font-size: 16px;
-                line-height: 1.6;
-                margin-bottom: 20px;
-            }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-
     # ===== Judul & Deskripsi =====
-    st.markdown(
-        '<h3 class="header"><strong>Munculnya Isu Childfree di Media Sosial</strong></h3>',
-        unsafe_allow_html=True,
-    )
-    st.markdown('<div class="custom-hr"></div>', unsafe_allow_html=True)
-
-    st.markdown(
-        """
-        <div class="justify-text">
-        Childfree adalah keputusan individu atau pasangan untuk tidak memiliki anak. 
-        Fenomena ini semakin populer karena pengaruh globalisasi, budaya Barat, serta gerakan feminisme 
-        yang menekankan hak perempuan untuk memilih. Faktor ekonomi dan kesehatan mental juga menjadi pertimbangan, 
-        dimana biaya hidup tinggi dan stres saat mengasuh anak sering dijadikan alasan. 
-        Di Indonesia, program "Dua Anak Cukup" dari BKKBN mendorong masyarakat untuk membatasi jumlah anak, 
-        yang turut membuka ruang bagi pilihan childfree. 
-        Fenomena ini ramai di media sosial sejak 2021, kemudian semakin trend kembali pada 2023, 
-        hal ini dikarenakan setelah publik figur seperti Gita Savitri mengungkapkan pilihan hidup mereka untuk tidak memiliki anak. 
-        Menurut data Badan Pusat Statistik, sekitar 8% perempuan Indonesia memilih untuk tidak memiliki anak, 
-        dengan 71.000 di antaranya mendukung fenomena childfree. 
-        Walaupun mendapat resistensi dari nilai-nilai tradisional, penggunaan media sosial sebagai ruang diskusi 
+    st.markdown("""
+    <div style="margin-bottom: 1rem;">
+    <h3 style="font-size: 28px; margin-bottom: 0.3rem;">Munculnya Isu Childfree di Media Sosial</h3>
+    <hr style="border: 3px solid #313552; width: 50%; margin-top: 5px; margin-bottom: 20px; margin-left: 0;">
+    <p style="text-align: justify; font-size: 16px; line-height: 1.6; color: #333333;">
+        Childfree adalah keputusan individu atau pasangan untuk tidak memiliki anak.
+        Fenomena ini semakin populer karena pengaruh globalisasi, budaya Barat, serta gerakan feminisme
+        yang menekankan hak perempuan untuk memilih. Faktor ekonomi dan kesehatan mental juga menjadi pertimbangan,
+        dimana biaya hidup tinggi dan stres saat mengasuh anak sering dijadikan alasan.
+        Di Indonesia, program "Dua Anak Cukup" dari BKKBN mendorong masyarakat untuk membatasi jumlah anak,
+        yang turut membuka ruang bagi pilihan childfree.
+        Fenomena ini ramai di media sosial sejak 2021, kemudian semakin trend kembali pada 2023,
+        hal ini dikarenakan setelah publik figur seperti Gita Savitri mengungkapkan pilihan hidup mereka untuk tidak memiliki anak.
+        Menurut data Badan Pusat Statistik, sekitar 8% perempuan Indonesia memilih untuk tidak memiliki anak,
+        dengan 71.000 di antaranya mendukung fenomena childfree.
+        Walaupun mendapat resistensi dari nilai-nilai tradisional, penggunaan media sosial sebagai ruang diskusi
         terbuka telah membuat masyarakat menjadi lebih menerima childfree sebagai pilihan hidup yang sah.
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    # ===== CSS Card Pro & Kontra =====
-    st.markdown(
-        """
+    </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # ===== Card Pro Kontra =====
+    st.markdown("""
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-        <style>
-            .card-container {
-                display: flex;
-                justify-content: center;
-                gap: 30px; 
-                margin-top: 20px;
-                margin-bottom: 20px;
-                flex-wrap: wrap; 
-            }
-            .card {
-                border-radius: 10px;
-                margin-bottom: 20px;
-                padding: 20px;
-                color: #FFFFFF;         
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-                width: 600px;
-            }
-            .card.pro {
-                background-color: #4CAF50;
-            }
-            .card.kontra {
-                background-color: #FF4C4C;
-            }
-            .card h3 {
-                margin-top: 0;
-                margin-bottom: 5px;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-            }
-            .card p {
-                font-size: 15px;
-                line-height: 1.5;
-                text-align: justify;
-            }
-            .bi {
-                font-size: 22px;
-                color: #FFFFFF;
-            }
-        </style>
-
-        <div class="card-container">
-            <div class="card pro">
-                <h3><i class="bi bi-emoji-smile-fill"></i>Pro</h3>
-                <p>Pandangan yang mendukung childfree, seperti menganggapnya sebagai pilihan hidup yang baik, rasional, atau memberikan kebebasan lebih.</p>
-            </div>
-            <div class="card kontra">
-                <h3><i class="bi bi-emoji-angry-fill"></i>Kontra</h3>
-                <p>Pandangan yang menentang childfree, seperti menganggapnya sebagai pilihan yang salah, egois, atau bertentangan dengan norma sosial.</p>
-            </div>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; margin-bottom: 1.5rem;">
+        <div style="
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <h3 style="margin-top: 0; display: flex; align-items: center; gap: 8px;">
+            <i class="bi bi-emoji-smile-fill"></i>Pro
+            </h3>
+            <p style="text-align: justify; font-size: 15px; line-height: 1.5;">
+            Pandangan yang mendukung childfree, seperti menganggapnya sebagai pilihan hidup yang baik, rasional, atau memberikan kebebasan lebih.
+            </p>
         </div>
-        """,
-        unsafe_allow_html=True,
-    )
+        <div style="
+            background-color: #FF4C4C;
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <h3 style="margin-top: 0; display: flex; align-items: center; gap: 8px;">
+            <i class="bi bi-emoji-angry-fill"></i>Kontra
+            </h3>
+            <p style="text-align: justify; font-size: 15px; line-height: 1.5;">
+            Pandangan yang menentang childfree, seperti menganggapnya sebagai pilihan yang salah, egois, atau bertentangan dengan norma sosial.
+            </p>
+        </div>
+        </div>
+        """, unsafe_allow_html=True)
 
     # ===== Diagram Pie =====
     df["Pro"] = df["Label"].apply(lambda x: 1 if x == "Pro" else 0)
