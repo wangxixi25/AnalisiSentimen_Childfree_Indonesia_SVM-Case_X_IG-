@@ -6,12 +6,8 @@ def tampilkan_grafik_perbandingan_full(file_path):
     df = pd.read_excel(file_path)
 
     # Ambil dan bersihkan data
-    df_clean = df.iloc[1:, [0, 1, 2, 9, 10, 11, 12]].copy()
-    df_clean.columns = ['Teknik Imbalance', 'Kernel SVM', 'Skenario Data Split',
-                        'Accuracy', 'Precision', 'Recall', 'F1-score']
-
-    # Hapus baris dengan nilai kosong pada kolom penting
-    df_clean = df_clean.dropna(subset=["Teknik Imbalance", "Kernel SVM", "Skenario Data Split"])
+    df_clean = df.iloc[1:, [0, 1, 2, 9, 10, 11, 12]]
+    df_clean.columns = ['Teknik Imbalance', 'Kernel SVM', 'Skenario Data Split', 'Accuracy', 'Precision', 'Recall', 'F1-score']
 
     skenarios = ['90:10', '80:20', '70:30', '60:40']
 
@@ -21,21 +17,16 @@ def tampilkan_grafik_perbandingan_full(file_path):
         for j in range(2):
             if i + j < len(skenarios):
                 skenario = skenarios[i + j]
-                df_filtered = df_clean[df_clean['Skenario Data Split'] == skenario].copy()
+                df_filtered = df_clean[df_clean['Skenario Data Split'] == skenario]
 
-                # Pastikan tidak ada NaN
-                df_filtered = df_filtered.dropna(subset=['Accuracy', 'Precision', 'Recall', 'F1-score'])
-
-                # Ubah ke format long
                 df_melted = df_filtered.melt(
                     id_vars=['Teknik Imbalance', 'Kernel SVM'],
                     value_vars=['Accuracy', 'Precision', 'Recall', 'F1-score'],
                     var_name='Metric', value_name='Score'
                 )
 
-                df_melted['Score'] = df_melted['Score'].astype(float) * 100
+                df_melted['Score'] = df_melted['Score'] * 100
                 df_melted['Score_Text'] = df_melted['Score'].apply(lambda x: f"{x:.2f}%")
-                df_melted['Teknik Imbalance'] = df_melted['Teknik Imbalance'].astype(str).str.strip()
 
                 fig = px.bar(
                     df_melted,
@@ -56,16 +47,17 @@ def tampilkan_grafik_perbandingan_full(file_path):
 
                 fig.update_layout(
                     height=350,
-                    margin=dict(t=40, l=30, r=20, b=20),
+                    margin=dict(t=50,l=30, r=20, b=20),
+                    title=skenario,
                     title_font=dict(size=16),
-                    title_x=0.0,  # Judul kiri
+                    title_x=0.5,
                     legend_title='Kernel SVM',
                     legend_font=dict(size=13),
                 )
 
                 fig.update_traces(
                     textposition='inside',
-                    textfont_size=16
+                    textfont_size=14
                 )
 
                 fig.for_each_xaxis(lambda x: x.update(
@@ -76,30 +68,16 @@ def tampilkan_grafik_perbandingan_full(file_path):
                 ))
 
                 fig.for_each_yaxis(lambda y: y.update(
-                    tick0=0, dtick=20, range=[0, 82],
+                    tick0=0, dtick=30,range=[0, 90],
                     title_font=dict(size=14)
                 ))
 
                 with cols[j]:
-                    st.markdown(f"### Skenario {skenario}", unsafe_allow_html=True)
+                    st.markdown(
+                        f"<div style='text-align: left; font-weight: 600; font-size: 16px; margin-bottom: -8px;'>Skenario Data Split {skenario}</div>",
+                        unsafe_allow_html=True
+                    )
                     st.plotly_chart(fig, use_container_width=True)
-
-    # Tambahan CSS agar responsif di HP
-    st.markdown("""
-    <style>
-    @media only screen and (max-width: 768px) {
-        .st-emotion-cache-1avcm0n, .st-emotion-cache-1qg05tj {
-            width: 100% !important;
-            flex: 1 1 100% !important;
-        }
-        h5 {
-            font-size: 16px !important;
-            margin-top: 10px !important;
-        }
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
 
 # Fungsi untuk menampilkan Akurasi Terbaik
 def tampilkan_akurasi_terbaik(file_path):
