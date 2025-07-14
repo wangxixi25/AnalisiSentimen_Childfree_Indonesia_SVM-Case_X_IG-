@@ -23,7 +23,6 @@ def run():
     <div style="
         background-color: #4285F4;
         padding: 2rem;
-        border-radius: 12px;
         color: white;
         margin-bottom: 2rem;
     ">
@@ -34,15 +33,16 @@ def run():
             gap: 2rem;
         ">
             <div style="flex: 1 1 300px;">
-                <h2 style="margin-top: 0; font-size: clamp(24px, 5vw, 40px); line-height: 1.3;">
+                <h2 style="margin-top: 0; font-size: clamp(24px, 5vw, 40px); line-height: 1.3; text-align: justify;"">
                     Fenomena Childfree di Platform Media Sosial X dan Instagram
                 </h2>
-                <p style="font-size: clamp(14px, 2.5vw, 17px); line-height: 1.6;">
+                <p style="font-size: clamp(14px, 2.5vw, 17px); line-height: 1.6; text-align: justify;">
                     Pilihan untuk hidup tanpa anak atau <em>childfree</em> menjadi sorotan di media sosial, 
                     yang mencerminkan pergeseran nilai dan prioritas hidup generasi muda. Visualisasi ini menyajikan 
                     analisis opini publik dari platform X dan Instagram selama tahun 2021–2024 menggunakan metode 
                     klasifikasi <strong>Support Vector Machine</strong>.
                 </p>
+
             </div>
             <div style="flex: 1 1 300px;">
                 <img src="data:image/png;base64,{img_base64}" style="max-width: 100%; height: auto; border-radius: 8px;" />
