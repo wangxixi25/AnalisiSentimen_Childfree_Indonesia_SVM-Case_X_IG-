@@ -77,23 +77,6 @@ def run():
         # Tampilkan wordcloud
         tampilkan_wordcloud(df)
 
-        # ==== Grafik Perbandingan Teknik Imbalance ====
-        st.markdown("""<style>.center-header { text-align: center; font-size: 30px; }</style>""", unsafe_allow_html=True)
-        st.markdown('<h3 class="center-header"><strong>Distribusi Teknik Imbalance dalam Data Training</strong></h3>', unsafe_allow_html=True)
-        st.markdown("""<style>.custom-hr { border: 3px solid #313552; width: 300px; margin-bottom: 40px; margin-left: auto; margin-right: auto; }</style>""", unsafe_allow_html=True)
-        st.markdown('<div class="custom-hr"></div>', unsafe_allow_html=True)
-        # Menampilkan Grafik Perbandingan Teknik Imbalance
-        file_path = 'data/Pesebaran Data Spilt.xlsx'  # Path ke file teknik imbalance
-        try:
-            # Membaca file Pesebaran Data Spilt
-            df_spilt = pd.read_excel(file_path)
-
-            # Menampilkan grafik berdasarkan data yang dibaca
-            display_graphs(df_spilt, st)  # Menampilkan grafik teknik imbalance
-
-        except Exception as e:
-            st.error(f"Terjadi kesalahan saat memuat file Excel: {e}")
-
        # ==== Grafik Perbandingan Teknik Imbalance ====
         st.markdown("""<style>.center-header { text-align: center; font-size: 28px; }</style>""", unsafe_allow_html=True)
         st.markdown('<h3 class="center-header"><strong>Hasil Evaluasi Model SVM dengan Teknik Imbalance</strong></h3>', unsafe_allow_html=True)

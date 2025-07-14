@@ -2,22 +2,26 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+
 def tampilkan_grafik_perbandingan_full(file_path):
     df = pd.read_excel(file_path)
 
-    # Ambil dan bersihkan data
     df_clean = df.iloc[1:, [0, 1, 2, 9, 10, 11, 12]]
-    df_clean.columns = ['Teknik Imbalance', 'Kernel SVM', 'Skenario Data Split', 'Accuracy', 'Precision', 'Recall', 'F1-score']
+    df_clean.columns = ['Teknik Imbalance', 'Kernel SVM', 'Skenario Data Split',
+                        'Accuracy', 'Precision', 'Recall', 'F1-score']
 
     skenarios = ['90:10', '80:20', '70:30', '60:40']
 
+    # Looping dalam 2 baris × 2 kolom
     for i in range(0, len(skenarios), 2):
-        col1, col2 = st.columns(2)
-
-        for col, idx in zip([col1, col2], [i, i + 1]):
-            if idx < len(skenarios):
-                skenario = skenarios[idx]
-                with col:
+        cols = st.columns(2)
+        for j in range(2):
+            if i + j < len(skenarios):
+                skenario = skenarios[i + j]
+                with cols[j]:
                     st.subheader(f'Skenario: {skenario}')
                     df_filtered = df_clean[df_clean['Skenario Data Split'] == skenario]
                     df_melted = df_filtered.melt(
@@ -43,10 +47,8 @@ def tampilkan_grafik_perbandingan_full(file_path):
                         }
                     )
 
-                    # Bersihkan label facet
                     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
-                    # Layout dan sumbu
                     fig.update_layout(
                         height=400,
                         margin=dict(t=40, l=30, r=20, b=20),
@@ -55,18 +57,22 @@ def tampilkan_grafik_perbandingan_full(file_path):
                         title_x=0.5,
                         legend_title='Kernel SVM',
                         legend_font=dict(size=13),
+                        bargap=0.25,
+                        bargroupgap=0.1,
                     )
 
                     fig.update_traces(
                         textposition='inside',
-                        textfont_size=20,
+                        textfont_size=18,
                     )
 
-                    # Sumbu X dan Y per facet
-                    fig.for_each_yaxis(lambda y: y.update(tick0=0, dtick=20, range=[0,82], title_font=dict(size=14)))
-                    fig.for_each_xaxis(lambda x: x.update(tickangle=0, title='Metric', title_font=dict(size=12), tickfont=dict(size=10)))
+                    fig.for_each_yaxis(lambda y: y.update(tick0=0, dtick=20, range=[0, 82], title_font=dict(size=14)))
+                    fig.for_each_xaxis(lambda x: x.update(tickangle=0, title='Metric',
+                                                          title_font=dict(size=12),
+                                                          tickfont=dict(size=11)))
 
                     st.plotly_chart(fig, use_container_width=True)
+
 
 # Fungsi untuk menampilkan Akurasi Terbaik
 def tampilkan_akurasi_terbaik(file_path):
