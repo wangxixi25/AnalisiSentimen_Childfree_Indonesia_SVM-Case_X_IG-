@@ -85,7 +85,7 @@ model = joblib.load('models/svm_best_model.pkl')
 
 # ========== Streamlit App ==========
 def run():
-    st.title("Analisis Sentimen Childfree: Pro vs Kontra")
+    st.title("Analisis Sentimen Childfree Terhadap Klasifikasi")
 
     user_input = st.text_area(
         "Tulis kalimatmu di sini (Contoh: 'Aku sih mendukung Gerakan Childfree')", 
@@ -110,7 +110,7 @@ def run():
             result = "Pro" if pro > kontra else "Kontra"
 
             # Output
-            st.subheader(f"🔍 Hasil Prediksi: {result} (Childfree)")
+            st.subheader(f"🔍 Hasil Prediksi: {result} Childfree")
             st.write(f"😄 Probabilitas Pro: {pro:.2f}%")
             st.write(f"😠 Probabilitas Kontra: {kontra:.2f}%")
             # st.caption(f"🧼 Kalimat setelah preprocessing: *{cleaned_input}*")
